@@ -1,0 +1,17 @@
+{
+  "name": "DocScan — Scanner ninja de documentos",
+  "short_name": "DocScan",
+  "description": "Escaneie documentos com a câmera, recorte automático, filtros, PDF, Word, Excel, assinatura e mais.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF3D6",
+  "theme_color": "#FF7A00",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

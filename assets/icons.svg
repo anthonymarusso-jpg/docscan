@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13.5" rx="3.5" fill="currentColor" fill-opacity=".16"/>
+<path d="M8.5 7l1.6-2.6h3.8L15.5 7"/>
+<circle cx="12" cy="13.7" r="3.6"/>
+<circle cx="18" cy="10.3" r=".35" fill="currentColor"/></g></symbol>
+<symbol id="i-gallery" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h11.5A2.5 2.5 0 0 1 21 6v11"/>
+<rect x="3" y="7" width="14.5" height="13.5" rx="2.5" fill="currentColor" fill-opacity=".16"/>
+<path d="M3.6 18l3.9-4 3 3 2-2 4.4 4.3"/>
+<circle cx="12.7" cy="11.2" r="1.2"/></g></symbol>
+<symbol id="i-torch" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h10v3.2l-2.6 4v9a1.8 1.8 0 0 1-1.8 1.8h-1.2a1.8 1.8 0 0 1-1.8-1.8v-9L7 6.7z" fill="currentColor" fill-opacity=".16"/>
+<path d="M7 6.7h10M12 14v2.4"/></g></symbol>
+<symbol id="i-torch-off" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h10v3.2l-2.6 4v9a1.8 1.8 0 0 1-1.8 1.8h-1.2a1.8 1.8 0 0 1-1.8-1.8v-9L7 6.7z" fill="currentColor" fill-opacity=".16"/>
+<path d="M7 6.7h10"/>
+<path d="M3.5 3.5l17 17"/></g></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></g></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5L7.5 12l7.5 7.5"/></g></symbol>
+<symbol id="i-forward" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4.5l7.5 7.5L9 19.5"/></g></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.8l4.8 4.7L19.5 7"/></g></symbol>
+<symbol id="i-rotate-left" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 5.5a7.5 7.5 0 1 1-7.5 7.5"/>
+<path d="M15.2 2.8l-2.8 2.7 2.8 2.7"/></g></symbol>
+<symbol id="i-rotate-right" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 5.5a7.5 7.5 0 1 0 7.5 7.5"/>
+<path d="M8.8 2.8l2.8 2.7-2.8 2.7"/></g></symbol>
+<symbol id="i-crop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2.5V16A1.5 1.5 0 0 0 8 17.5h13.5"/>
+<path d="M2.5 6.5H16A1.5 1.5 0 0 1 17.5 8v13.5"/></g></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 6.5l1 13a2 2 0 0 0 2 1.9h7a2 2 0 0 0 2-1.9l1-13" fill="currentColor" fill-opacity=".16"/>
+<path d="M3.5 6.5h17"/>
+<path d="M9 6.5V4.6c0-.9.7-1.6 1.6-1.6h2.8c.9 0 1.6.7 1.6 1.6v1.9"/>
+<path d="M10 10.5V17M14 10.5V17"/></g></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 9.5H7A2.5 2.5 0 0 0 4.5 12v7A2.5 2.5 0 0 0 7 21.5h10a2.5 2.5 0 0 0 2.5-2.5v-7A2.5 2.5 0 0 0 17 9.5h-1.5"/>
+<path d="M12 14.5V2.8M8 6.6l4-4 4 4"/></g></symbol>
+<symbol id="i-pdf" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.5H7A2.5 2.5 0 0 0 4.5 5v14A2.5 2.5 0 0 0 7 21.5h10a2.5 2.5 0 0 0 2.5-2.5V8z" fill="currentColor" fill-opacity=".16"/>
+<path d="M14 2.5v4A1.5 1.5 0 0 0 15.5 8h4"/>
+<rect x="2" y="12" width="12.5" height="6.5" rx="1.6" fill="currentColor"/></g></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5v15M4.5 12h15"/></g></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7h3.3M12.2 7h8.3M3.5 17h8.3M17.2 17h3.3"/>
+<circle cx="9.5" cy="7" r="2.7"/>
+<circle cx="14.5" cy="17" r="2.7"/></g></symbol>
+<symbol id="i-arrow-left" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12H5M11 5.5L4.5 12l6.5 6.5"/></g></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12H19M13 5.5l6.5 6.5-6.5 6.5"/></g></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2.5L5 13.5h6.2L10 21.5l9-11.5h-6.3z" fill="currentColor" fill-opacity=".16"/></g></symbol>
+<symbol id="i-pencil" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l.9-4.6L15.6 4.7a2 2 0 0 1 2.8 0l.9.9a2 2 0 0 1 0 2.8L8.6 19.1z" fill="currentColor" fill-opacity=".16"/>
+<path d="M13.4 6.9l3.7 3.7"/></g></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11.5M7.5 10l4.5 4.5 4.5-4.5"/>
+<path d="M4 16.5v2A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5v-2"/></g></symbol>
+<symbol id="i-expand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5V6A2.5 2.5 0 0 1 6 3.5h2.5M15.5 3.5H18A2.5 2.5 0 0 1 20.5 6v2.5M20.5 15.5V18a2.5 2.5 0 0 1-2.5 2.5h-2.5M8.5 20.5H6A2.5 2.5 0 0 1 3.5 18v-2.5"/>
+<path d="M7.5 16l3-3.2 2 2 1.5-1.5 2.5 2.7"/>
+<circle cx="14.6" cy="9" r=".9"/></g></symbol>
+<symbol id="i-scan" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5V6A2.5 2.5 0 0 1 6 3.5h2.5M15.5 3.5H18A2.5 2.5 0 0 1 20.5 6v2.5M20.5 15.5V18a2.5 2.5 0 0 1-2.5 2.5h-2.5M8.5 20.5H6A2.5 2.5 0 0 1 3.5 18v-2.5"/>
+<path d="M7 12h10"/></g></symbol>
+<symbol id="i-wand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L14.5 9.5"/>
+<path d="M17.5 2.8v4M15.5 4.8h4M20.3 10.2v2.6M19 11.5h2.6M10.8 2.8v2.6M9.5 4.1h2.6"/></g></symbol>
+<symbol id="i-pages" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2.5" width="12.5" height="15.5" rx="2.5" fill="currentColor" fill-opacity=".16"/>
+<path d="M4.5 6.8V19A2.5 2.5 0 0 0 7 21.5h9.3"/></g></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="12" r="1" fill="currentColor"/>
+<circle cx="12" cy="12" r="1" fill="currentColor"/>
+<circle cx="18.5" cy="12" r="1" fill="currentColor"/></g></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4L2.7 17.4A2 2 0 0 0 4.4 20.4h15.2a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0z" fill="currentColor" fill-opacity=".16"/>
+<path d="M12 9.2v4.3M12 17v.1"/></g></symbol>
+<symbol id="i-sparkle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.9 5 3.6 8.1 9 9-5.4.9-8.1 4-9 9-.9-5-3.6-8.1-9-9 5.4-.9 8.1-4 9-9z" fill="currentColor" fill-opacity=".16"/></g></symbol>
+<symbol id="art-shuriken" viewBox="0 0 100 100"><path d="M50 4Q58.55 26.51 63.44 36.56Q79.13 39.4 96 50Q73.49 58.55 63.44 63.44Q60.6 79.13 50 96Q41.45 73.49 36.56 63.44Q20.87 60.6 4 50Q26.51 41.45 36.56 36.56Q39.4 20.87 50 4Z" style="fill:var(--shuriken-blade,#FF7A00);stroke:var(--shuriken-ink,#141414)" stroke-width="5" stroke-linejoin="round"/>
+<path d="M50 35L50 11M65 50L89 50M50 65L50 89M35 50L11 50" fill="none" style="stroke:var(--shuriken-ink,#141414)" stroke-width="2.2" stroke-linecap="round" opacity=".28"/>
+<path d="M45.5 30.51L45.16 19.38M69.49 45.5L80.62 45.16M54.5 69.49L54.84 80.62M30.51 54.5L19.38 54.84" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" opacity=".6"/>
+<circle cx="50" cy="50" r="9.5" style="fill:var(--shuriken-hole,#FFF3D6);stroke:var(--shuriken-ink,#141414)" stroke-width="4.5"/>
+<circle cx="47" cy="47" r="2.2" fill="#fff" opacity=".8"/></symbol>
+<symbol id="art-emblem" viewBox="0 0 64 64"><path d="M8 20V12.5A4.5 4.5 0 0 1 12.5 8H20M44 8h7.5A4.5 4.5 0 0 1 56 12.5V20M56 44v7.5a4.5 4.5 0 0 1-4.5 4.5H44M20 56h-7.5A4.5 4.5 0 0 1 8 51.5V44" fill="none" stroke="#141414" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 20V12.5A4.5 4.5 0 0 1 12.5 8H20M44 8h7.5A4.5 4.5 0 0 1 56 12.5V20M56 44v7.5a4.5 4.5 0 0 1-4.5 4.5H44M20 56h-7.5A4.5 4.5 0 0 1 8 51.5V44" fill="none" stroke="#FF9A1F" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.5 14H36l9 9v25.5a3 3 0 0 1-3 3H21.5a3 3 0 0 1-3-3V17a3 3 0 0 1 3-3z" fill="#FFFBF0" stroke="#141414" stroke-width="3.6" stroke-linejoin="round"/>
+<path d="M36 14v6.5a2.5 2.5 0 0 0 2.5 2.5H45" fill="#FFE7B3" stroke="#141414" stroke-width="3" stroke-linejoin="round"/>
+<path d="M23.5 30.5h15M23.5 37h15M23.5 43.5h9" fill="none" stroke="#141414" stroke-width="3" stroke-linecap="round"/>
+<path d="M13 34h38" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round"/>
+<path d="M13 34h38" fill="none" stroke="#E23D2E" stroke-width="2.8" stroke-linecap="round"/></symbol>
+<symbol id="art-kunai" viewBox="0 0 100 30"><circle cx="11" cy="15" r="7" fill="none" stroke="#141414" stroke-width="6"/>
+<circle cx="11" cy="15" r="7" fill="none" stroke="#B9C3CD" stroke-width="2.6"/>
+<rect x="17" y="10.5" width="30" height="9" rx="3" fill="#1F4E9C" stroke="#141414" stroke-width="3"/>
+<path d="M24 10.5l-3 9M31 10.5l-3 9M38 10.5l-3 9M45 10.5l-3 9" stroke="#141414" stroke-width="2" opacity=".55"/>
+<path d="M47 15l12-10.5Q78 9 96 15Q78 21 59 25.5z" fill="#B9C3CD" stroke="#141414" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M50 15h44" stroke="#141414" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+<path d="M60 10.5Q76 11.5 88 13.6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".75"/></symbol>
+</svg>

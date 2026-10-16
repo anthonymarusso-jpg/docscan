@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="DocScan">
+<meta name="theme-color" content="#FF7A00">
+<meta name="format-detection" content="telephone=no">
+<title>DocScan</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- ============ HOME ============ -->
+<section class="screen is-active" id="screen-home">
+  <header class="app-header">
+    <h1 class="app-title"><img class="app-title__mark" src="assets/emblem.svg" alt="">Doc<span class="app-title__accent">Scan</span></h1>
+    <span class="app-header__spacer"></span>
+    <button class="btn-icon" id="home-settings" aria-label="Ajustes"><svg class="ico"><use href="assets/icons.svg#i-settings"/></svg></button>
+  </header>
+  <div class="home-tabs">
+    <div class="seg" role="group" aria-label="Seções">
+      <button class="seg__opt" aria-pressed="true" data-tab="docs">Documentos</button>
+      <button class="seg__opt" aria-pressed="false" data-tab="tools">Ferramentas</button>
+    </div>
+  </div>
+  <div class="screen__body" id="home-docs">
+    <div class="quick-row">
+      <button class="quick" data-quick="import"><svg class="ico"><use href="assets/icons-extra.svg#x-import"/></svg>Importar</button>
+      <button class="quick" data-quick="idcard"><svg class="ico"><use href="assets/icons-extra.svg#x-id"/></svg>RG / CNH</button>
+      <button class="quick" data-quick="ocr"><svg class="ico"><use href="assets/icons-extra.svg#x-ocr"/></svg>Extrair texto</button>
+      <button class="quick" data-quick="qr"><svg class="ico"><use href="assets/icons-extra.svg#x-qr"/></svg>QR code</button>
+    </div>
+    <div class="search-row">
+      <input class="field" id="home-search" type="search" placeholder="Buscar documentos" aria-label="Buscar documentos" autocomplete="off">
+      <button class="btn-icon" id="home-sort" aria-label="Ordenar"><svg class="ico"><use href="assets/icons-extra.svg#x-sort"/></svg></button>
+    </div>
+    <div class="scroll-grid" id="doc-grid"></div>
+    <div class="home-empty" id="home-empty" hidden>
+      <div class="empty-state">
+        <span class="speech">Nada por aqui ainda!</span>
+        <img class="empty-state__art" src="assets/mascot.svg" alt="">
+        <h3 class="empty-state__title">Nenhum pergaminho</h3>
+        <p class="empty-state__text">Toque em “Novo scan” para capturar sua primeira folha, ou use as Ferramentas.</p>
+      </div>
+    </div>
+  </div>
+  <div class="screen__body" id="home-tools" hidden></div>
+  <button class="scan-cta scan-cta--dock" id="btn-scan"><img class="scan-cta__star" src="assets/shuriken.svg" alt="">Novo scan</button>
+</section>
+
+<!-- ============ CAMERA ============ -->
+<section class="screen" id="screen-camera">
+  <div class="cam-screen">
+    <video class="cam-video" id="cam-video" playsinline muted autoplay></video>
+    <canvas class="cam-overlay" id="cam-overlay"></canvas>
+    <div class="qr-frame" id="qr-frame" hidden></div>
+    <div class="flash" id="cam-flash"></div>
+    <div class="speed-burst" id="cam-burst"></div>
+    <div class="cam-nocam" id="cam-nocam" hidden>
+      <div class="panel panel--notice">
+        <img src="assets/mascot.svg" alt="">
+        <h3 id="nocam-title">Câmera ao vivo indisponível</h3>
+        <p id="nocam-text">Use a câmera do próprio iPhone: tire a foto e o app encontra a folha sozinho.</p>
+        <button class="btn btn--primary btn--lg btn--block" id="nocam-native"><svg class="ico"><use href="assets/icons.svg#i-camera"/></svg>Abrir câmera do iPhone</button>
+        <button class="btn btn--secondary btn--block" id="nocam-gallery"><svg class="ico"><use href="assets/icons.svg#i-gallery"/></svg>Escolher fotos</button>
+      </div>
+    </div>
+    <div class="cam-bar cam-bar--top">
+      <button class="btn-icon btn-icon--dark" id="cam-close" aria-label="Fechar câmera"><svg class="ico"><use href="assets/icons.svg#i-close"/></svg></button>
+      <button class="btn-icon btn-icon--dark" id="cam-torch" aria-pressed="false" aria-label="Lanterna" hidden><svg class="ico"><use href="assets/icons.svg#i-torch-off"/></svg></button>
+      <span class="cam-bar__spacer"></span>
+      <button class="chip-toggle chip-toggle--dark" id="cam-auto" aria-pressed="false"><span class="chip-toggle__dot"><svg class="ico"><use href="assets/icons.svg#i-bolt"/></svg></span>Auto</button>
+    </div>
+    <div class="cam-hint"><span class="hint-bubble" id="cam-hint">Procurando a folha<span class="hint-dots"><i></i><i></i><i></i></span></span></div>
+    <div class="cam-bar cam-bar--bottom">
+      <div class="cam-modes">
+        <div class="seg seg--dark" role="group" aria-label="Modo de captura" id="cam-modes">
+          <button class="seg__opt" data-mode="single" aria-pressed="true">Página</button>
+          <button class="seg__opt" data-mode="batch" aria-pressed="false">Lote</button>
+          <button class="seg__opt" data-mode="idcard" aria-pressed="false">RG/CNH</button>
+          <button class="seg__opt" data-mode="qr" aria-pressed="false">QR</button>
+        </div>
+      </div>
+      <div class="cam-bar__row">
+        <span class="cam-action"><button class="btn-icon btn-icon--dark" id="cam-import" aria-label="Importar fotos"><svg class="ico"><use href="assets/icons.svg#i-gallery"/></svg></button><span class="cam-action__label">Importar</span></span>
+        <button class="shutter" id="cam-shutter" aria-label="Capturar"><img class="shutter__star" src="assets/shuriken.svg" alt=""></button>
+        <span class="cam-action"><button class="thumb-stack is-empty" id="cam-stack" aria-label="Concluir e ver o documento"><span class="count-badge" id="cam-count"></span></button><span class="cam-action__label">Concluir</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CROP ============ -->
+<section class="screen" id="screen-crop">
+  <header class="app-header app-header--sub">
+    <button class="btn-icon" id="crop-back" aria-label="Voltar"><svg class="ico"><use href="assets/icons.svg#i-back"/></svg></button>
+    <h2 class="app-title app-title--sm">Ajustar bordas</h2>
+    <span id="crop-queue" class="txt-muted"></span>
+  </header>
+  <div class="crop-host" id="crop-host"></div>
+  <nav class="toolbar">
+    <button class="tool-btn" id="crop-auto"><svg class="ico"><use href="assets/icons.svg#i-wand"/></svg>Auto</button>
+    <button class="tool-btn" id="crop-all"><svg class="ico"><use href="assets/icons.svg#i-expand"/></svg>Tudo</button>
+    <button class="tool-btn" id="crop-retake"><svg class="ico"><use href="assets/icons.svg#i-camera"/></svg>Refazer</button>
+    <button class="tool-btn" id="crop-ok" aria-pressed="true"><svg class="ico"><use href="assets/icons.svg#i-check"/></svg>Pronto</button>
+  </nav>
+</section>
+
+<!-- ============ EDIT (filters) ============ -->
+<section class="screen" id="screen-edit">
+  <header class="app-header app-header--sub">
+    <button class="btn-icon" id="edit-back" aria-label="Voltar"><svg class="ico"><use href="assets/icons.svg#i-back"/></svg></button>
+    <h2 class="app-title app-title--sm" id="edit-title">Filtro</h2>
+    <button class="btn btn--primary btn--sm" id="edit-save">Salvar</button>
+  </header>
+  <div class="stage edit-stage" id="edit-stage"><canvas id="edit-canvas"></canvas></div>
+  <div class="edit-filters"><div class="filter-row" id="edit-filters"></div></div>
+  <nav class="toolbar">
+    <button class="tool-btn" id="edit-rotl"><svg class="ico"><use href="assets/icons.svg#i-rotate-left"/></svg>Girar</button>
+    <button class="tool-btn" id="edit-rotr"><svg class="ico"><use href="assets/icons.svg#i-rotate-right"/></svg>Girar</button>
+    <button class="tool-btn" id="edit-crop"><svg class="ico"><use href="assets/icons.svg#i-crop"/></svg>Recortar</button>
+    <button class="tool-btn" id="edit-annot"><svg class="ico"><use href="assets/icons.svg#i-pencil"/></svg>Anotar</button>
+  </nav>
+</section>
+
+<!-- ============ DOCUMENT ============ -->
+<section class="screen" id="screen-doc">
+  <header class="app-header app-header--sub">
+    <button class="btn-icon" id="doc-back" aria-label="Voltar"><svg class="ico"><use href="assets/icons.svg#i-back"/></svg></button>
+    <input class="hdr-title-input" id="doc-title" aria-label="Nome do documento" maxlength="80">
+    <button class="btn-icon" id="doc-more" aria-label="Mais opções"><svg class="ico"><use href="assets/icons.svg#i-more"/></svg></button>
+  </header>
+  <div class="screen__body"><div class="tile-grid" id="doc-pages"></div></div>
+  <nav class="toolbar doc-actions">
+    <button class="tool-btn" id="doc-share"><svg class="ico"><use href="assets/icons.svg#i-share"/></svg>Enviar</button>
+    <button class="tool-btn" id="doc-pdf"><svg class="ico"><use href="assets/icons.svg#i-pdf"/></svg>PDF</button>
+    <button class="tool-btn" id="doc-ocr"><svg class="ico"><use href="assets/icons-extra.svg#x-ocr"/></svg>Texto</button>
+    <button class="tool-btn" id="doc-sign"><svg class="ico"><use href="assets/icons-extra.svg#x-sign"/></svg>Assinar</button>
+    <button class="tool-btn" id="doc-tools"><svg class="ico"><use href="assets/icons.svg#i-sparkle"/></svg>Mais</button>
+  </nav>
+</section>
+
+<!-- ============ TOOL RUNNER ============ -->
+<section class="screen" id="screen-tool">
+  <header class="app-header app-header--sub">
+    <button class="btn-icon" id="tool-back" aria-label="Voltar"><svg class="ico"><use href="assets/icons.svg#i-back"/></svg></button>
+    <h2 class="app-title app-title--sm" id="tool-title">Ferramenta</h2>
+  </header>
+  <div class="screen__body" id="tool-body"></div>
+  <div class="run-bar" id="tool-runbar"><button class="btn btn--primary btn--lg btn--block btn--comic" id="tool-run">Converter</button></div>
+</section>
+
+<!-- ============ PAGE PICKER (extract / organize) ============ -->
+<section class="screen" id="screen-picker">
+  <header class="app-header app-header--sub">
+    <button class="btn-icon" id="picker-back" aria-label="Voltar"><svg class="ico"><use href="assets/icons.svg#i-back"/></svg></button>
+    <h2 class="app-title app-title--sm" id="picker-title">Páginas</h2>
+  </header>
+  <div class="pick-bar" id="picker-bar"></div>
+  <div class="screen__body"><div class="pick-grid" id="picker-grid"></div></div>
+  <div class="run-bar"><button class="btn btn--primary btn--lg btn--block btn--comic" id="picker-ok">Pronto</button></div>
+</section>
+
+<!-- ============ SIGNATURE / STAMP PLACEMENT ============ -->
+<section class="screen" id="screen-place">
+  <header class="app-header app-header--sub">
+    <button class="btn-icon" id="place-back" aria-label="Voltar"><svg class="ico"><use href="assets/icons.svg#i-back"/></svg></button>
+    <h2 class="app-title app-title--sm">Assinar</h2>
+    <button class="btn btn--primary btn--sm" id="place-ok">Concluir</button>
+  </header>
+  <div class="place-host" id="place-host"><div class="place-page" id="place-page"><img id="place-img" alt=""></div></div>
+  <div class="page-nav">
+    <button class="btn-icon btn-icon--sm" id="place-prev" aria-label="Página anterior"><svg class="ico"><use href="assets/icons.svg#i-arrow-left"/></svg></button>
+    <span id="place-num">1 / 1</span>
+    <button class="btn-icon btn-icon--sm" id="place-next" aria-label="Próxima página"><svg class="ico"><use href="assets/icons.svg#i-arrow-right"/></svg></button>
+  </div>
+  <nav class="toolbar">
+    <button class="tool-btn" id="place-add-sign"><svg class="ico"><use href="assets/icons-extra.svg#x-sign"/></svg>Assinatura</button>
+    <button class="tool-btn" id="place-add-text"><svg class="ico"><use href="assets/icons-extra.svg#x-text"/></svg>Texto</button>
+    <button class="tool-btn" id="place-add-date"><svg class="ico"><use href="assets/icons.svg#i-check"/></svg>Data</button>
+    <button class="tool-btn" id="place-add-img"><svg class="ico"><use href="assets/icons-extra.svg#x-image"/></svg>Carimbo</button>
+  </nav>
+</section>
+
+<!-- ============ ANNOTATE ============ -->
+<section class="screen" id="screen-annot">
+  <header class="app-header app-header--sub">
+    <button class="btn-icon" id="annot-back" aria-label="Cancelar"><svg class="ico"><use href="assets/icons.svg#i-close"/></svg></button>
+    <h2 class="app-title app-title--sm">Anotar</h2>
+    <button class="btn-icon" id="annot-undo" aria-label="Desfazer"><svg class="ico"><use href="assets/icons-extra.svg#x-undo"/></svg></button>
+    <button class="btn btn--primary btn--sm" id="annot-ok">Aplicar</button>
+  </header>
+  <div class="annot-host" id="annot-host"><canvas id="annot-canvas"></canvas></div>
+  <div class="color-row" id="annot-colors"></div>
+  <nav class="toolbar">
+    <button class="tool-btn" data-annot="pen" aria-pressed="true"><svg class="ico"><use href="assets/icons.svg#i-pencil"/></svg>Caneta</button>
+    <button class="tool-btn" data-annot="marker" aria-pressed="false"><svg class="ico"><use href="assets/icons-extra.svg#x-highlight"/></svg>Marca-texto</button>
+    <button class="tool-btn" data-annot="eraser" aria-pressed="false"><svg class="ico"><use href="assets/icons-extra.svg#x-eraser"/></svg>Apagar</button>
+    <button class="tool-btn" data-annot="text" aria-pressed="false"><svg class="ico"><use href="assets/icons-extra.svg#x-text"/></svg>Texto</button>
+  </nav>
+</section>
+
+<div id="overlays"></div>
+<div class="toast-bubble" id="toast" role="status" aria-live="polite"></div>
+<div class="loader" id="loader" role="alert" aria-live="assertive">
+  <img class="loader__star" src="assets/shuriken.svg" alt="">
+  <p class="loader__text" id="loader-text">Concentrando chakra…</p>
+  <p class="loader__sub" id="loader-sub"></p>
+  <div class="loader__bar" id="loader-bar" hidden><i></i></div>
+</div>
+
+<script src="js/libs.js"></script>
+<script src="js/detect.js"></script>
+<script src="js/warp.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/cropper.js"></script>
+<script src="js/camera.js"></script>
+<script src="js/db.js"></script>
+<script src="js/convert.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/annotate.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

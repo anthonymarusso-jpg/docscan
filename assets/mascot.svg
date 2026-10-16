@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="200" height="220" role="img" aria-label="Mascote pergaminho ninja">
+<ellipse cx="100" cy="209" rx="62" ry="8" fill="#141414" opacity=".16"/>
+<path d="M156 70q22-4 38 6-14-1-22 6 14 2 22 14-20-8-40-12z" fill="#1F4E9C" stroke="#141414" stroke-width="4.5" stroke-linejoin="round"/>
+<path d="M44 130Q24 122 19 101" fill="none" stroke="#141414" stroke-width="19" stroke-linecap="round"/>
+<path d="M44 130Q24 122 19 101" fill="none" stroke="#FFF3D6" stroke-width="10" stroke-linecap="round"/>
+<path d="M156 128Q176 134 172 154" fill="none" stroke="#141414" stroke-width="19" stroke-linecap="round"/>
+<path d="M156 128Q176 134 172 154" fill="none" stroke="#FFF3D6" stroke-width="10" stroke-linecap="round"/>
+<ellipse cx="78" cy="199" rx="16" ry="9.5" fill="#1F4E9C" stroke="#141414" stroke-width="4.5"/>
+<ellipse cx="122" cy="199" rx="16" ry="9.5" fill="#1F4E9C" stroke="#141414" stroke-width="4.5"/>
+<path d="M46 40H154Q167 111 154 182H46Q33 111 46 40Z" fill="#FFF3D6" stroke="#141414" stroke-width="5" stroke-linejoin="round"/>
+<path d="M146 46Q157 111 146 176H137Q147 111 137 46Z" fill="#FFE7B3"/>
+<rect x="30" y="22" width="140" height="26" rx="13" fill="#FF7A00" stroke="#141414" stroke-width="5"/>
+<path d="M44 30.5H156" stroke="#FFC27A" stroke-width="4.5" stroke-linecap="round"/>
+<rect x="18" y="17" width="20" height="36" rx="8" fill="#8A4B1F" stroke="#141414" stroke-width="5"/>
+<rect x="162" y="17" width="20" height="36" rx="8" fill="#8A4B1F" stroke="#141414" stroke-width="5"/>
+<rect x="30" y="170" width="140" height="26" rx="13" fill="#FF7A00" stroke="#141414" stroke-width="5"/>
+<path d="M44 178.5H156" stroke="#FFC27A" stroke-width="4.5" stroke-linecap="round"/>
+<rect x="18" y="165" width="20" height="36" rx="8" fill="#8A4B1F" stroke="#141414" stroke-width="5"/>
+<rect x="162" y="165" width="20" height="36" rx="8" fill="#8A4B1F" stroke="#141414" stroke-width="5"/>
+<path d="M41 62Q100 54 159 62L161 89Q100 81 39 89Z" fill="#1F4E9C" stroke="#141414" stroke-width="5" stroke-linejoin="round"/>
+<path d="M46 67Q100 60 154 67" fill="none" stroke="#3E74C9" stroke-width="3.5" stroke-linecap="round"/>
+<rect x="71" y="55" width="58" height="38" rx="8" fill="#B9C3CD" stroke="#141414" stroke-width="5"/>
+<rect x="74.5" y="58.5" width="51" height="7" rx="3.5" fill="#fff" opacity=".35"/>
+<circle cx="78" cy="62" r="2.2" fill="#141414"/><circle cx="122" cy="62" r="2.2" fill="#141414"/>
+<circle cx="78" cy="86" r="2.2" fill="#141414"/><circle cx="122" cy="86" r="2.2" fill="#141414"/>
+<g transform="translate(80.16 54.16) scale(0.62)"><g fill="none" stroke="#141414" stroke-linecap="round" stroke-linejoin="round">
+<path d="M8 20V12.5A4.5 4.5 0 0 1 12.5 8H20M44 8h7.5A4.5 4.5 0 0 1 56 12.5V20M56 44v7.5a4.5 4.5 0 0 1-4.5 4.5H44M20 56h-7.5A4.5 4.5 0 0 1 8 51.5V44" stroke-width="5"/>
+<path d="M21.5 14H36l9 9v25.5a3 3 0 0 1-3 3H21.5a3 3 0 0 1-3-3V17a3 3 0 0 1 3-3z" stroke-width="4"/>
+<path d="M36 14v6.5a2.5 2.5 0 0 0 2.5 2.5H45" stroke-width="3.5"/>
+<path d="M23.5 32h15M23.5 40h10" stroke-width="3.5"/>
+</g></g>
+<ellipse cx="77" cy="119" rx="12.5" ry="15.5" fill="#141414"/>
+<ellipse cx="123" cy="119" rx="12.5" ry="15.5" fill="#141414"/>
+<circle cx="81" cy="112.5" r="5" fill="#fff"/><circle cx="127" cy="112.5" r="5" fill="#fff"/>
+<circle cx="73.5" cy="125" r="2.3" fill="#fff"/><circle cx="119.5" cy="125" r="2.3" fill="#fff"/>
+<ellipse cx="58" cy="139" rx="9.5" ry="5.5" fill="#FF8A7A" opacity=".6"/>
+<ellipse cx="142" cy="139" rx="9.5" ry="5.5" fill="#FF8A7A" opacity=".6"/>
+<path d="M89 136Q100 151 111 136Z" fill="#C2382C" stroke="#141414" stroke-width="4" stroke-linejoin="round"/>
+<path d="M94.5 142.5Q100 139.5 105.5 142.5Q100 147.5 94.5 142.5Z" fill="#FF8A7A"/>
+<path d="M14 82l2.2 5.8 5.8 2.2-5.8 2.2L14 98l-2.2-5.8L6 90l5.8-2.2z" fill="#FF9A1F" stroke="#141414" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M186 120l1.6 4.2 4.2 1.6-4.2 1.6-1.6 4.2-1.6-4.2-4.2-1.6 4.2-1.6z" fill="#FF9A1F" stroke="#141414" stroke-width="2.2" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><path d="M50 4Q58.55 26.51 63.44 36.56Q79.13 39.4 96 50Q73.49 58.55 63.44 63.44Q60.6 79.13 50 96Q41.45 73.49 36.56 63.44Q20.87 60.6 4 50Q26.51 41.45 36.56 36.56Q39.4 20.87 50 4Z" fill="#B9C3CD" stroke="#141414" stroke-width="5" stroke-linejoin="round"/>
+<path d="M50 35L50 11M65 50L89 50M50 65L50 89M35 50L11 50" fill="none" stroke="#141414" stroke-width="2.2" stroke-linecap="round" opacity=".28"/>
+<path d="M45.5 30.51L45.16 19.38M69.49 45.5L80.62 45.16M54.5 69.49L54.84 80.62M30.51 54.5L19.38 54.84" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" opacity=".6"/>
+<circle cx="50" cy="50" r="9.5" fill="#FF7A00" stroke="#141414" stroke-width="4.5"/>
+<circle cx="47" cy="47" r="2.2" fill="#fff" opacity=".8"/></svg>
