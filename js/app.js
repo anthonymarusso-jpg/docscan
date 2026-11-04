@@ -114,6 +114,7 @@
     if (!session || session.mode === 'qr' || session.busyHint) return;
     if (session.mode === 'idcard') { hint('warn', session.idParts.length ? 'Agora o verso' : 'Frente do documento'); return; }
     if (!s.detected) hint('search');
+    else if (cam && cam.autoCapture && s.armed === false) hint('found', 'Capturada! Troque a folha');
     else if (cam && cam.autoCapture && s.stableProgress > 0.02) hint('hold', 'Segure firme…', s.stableProgress);
     else hint('found', 'Folha encontrada!');
   }

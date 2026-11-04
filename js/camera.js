@@ -302,6 +302,30 @@
     return out;
   }
 
+  // intersection-over-union of two convex quads (normalized coords), estimated on a 24x24 grid of their bbox
+  function quadOverlap(A, B) {
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const p of A.concat(B)) { x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y); }
+    const inside = (q, x, y) => {
+      let sign = 0;
+      for (let i = 0; i < 4; i++) {
+        const a = q[i], b = q[(i + 1) % 4], c = (b.x - a.x) * (y - a.y) - (b.y - a.y) * (x - a.x);
+        if (c === 0) continue;
+        if (!sign) sign = c > 0 ? 1 : -1; else if ((c > 0 ? 1 : -1) !== sign) return false;
+      }
+      return true;
+    };
+    let both = 0, any = 0;
+    const N = 24;
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+      const x = x0 + (x1 - x0) * (i + 0.5) / N, y = y0 + (y1 - y0) * (j + 0.5) / N;
+      const a = inside(A, x, y), b = inside(B, x, y);
+      if (a && b) both++;
+      if (a || b) any++;
+    }
+    return any ? both / any : 0;
+  }
+
   function signatureDistance(a, b) {
     if (!a || !b || a.length !== b.length || !a.length) return Infinity;
     let s = 0;
@@ -335,17 +359,19 @@
 
   const STABILITY_DEFAULTS = {
     aspect: 4 / 3,
-    stableThresh: 0.015,
-    stableMs: 900,
-    autoMs: 1200,
+    stableThresh: 0.022,
+    stableMs: 700,
+    autoMs: 800,
     cooldownMs: 1500,
     lostMs: 400,
-    outlierThresh: 0.12,
+    outlierThresh: 0.05,
     confirmThresh: 0.06,
     rearmThresh: 0.08,
+    rearmLossMs: 1000,
+    rearmOverlap: 0.7,
     sigThresh: 0.22,
     sigFrames: 2,
-    minAutoConfidence: 0.2,
+    minAutoConfidence: 0.6,
     autoCapture: false,
   };
 
@@ -396,6 +422,8 @@
     this.shot = { t, corners: this.target ? copyCorners(this.target) : null, sig: sig || null };
     this.needsChange = !!this.target;
     this.sigHits = 0;
+    this.lostAt = null;
+    this.backAt = null;
     this.cooldownUntil = t + this.o.cooldownMs;
     this.wasArmed = false;
   };
@@ -453,6 +481,7 @@
           }
         }
         if (event === 'none') {
+          if (this.lostAt != null && this.backAt == null) this.backAt = t;
           this.cand = { corners: raw, t, conf };
           event = 'candidate';
         }
@@ -482,7 +511,8 @@
           this.lastSeen = t;
           this.cand = null;
           this.conf = this.conf * 0.6 + conf * 0.4;
-          if (!this.anchorN || !this._extendStill(al)) this._restartStill(al, t);
+          // stillness is judged on the smoothed outline: detector noise must not restart the countdown
+          if (!this.anchorN || !this._extendStill(this.target)) this._restartStill(this.target, t);
           event = 'track';
         }
       }
@@ -490,20 +520,29 @@
 
     if (this.target && t - this.lastSeen > o.lostMs) {
       const keep = this.cand;
+      if (this.needsChange && this.lostAt == null) this.lostAt = this.lastSeen;
       this.resetTrack();
       this.cand = keep;
-      if (this.shot) this.needsChange = false;
       event = 'lost';
     }
     if (!this.target && this.cand && t - this.cand.t > o.lostMs) this.cand = null;
 
+    // After a shot, a new one needs a NEW page: the page left the view for a while (swap), or different
+    // content sits where the shot page was. Moving the phone or the outline flipping between two readings
+    // of the same page must not re-arm (that produced duplicate shots).
+    if (this.needsChange && this.target && this.lostAt != null) {
+      // absence = from the last sighting to the first new sighting (not to the confirmed restart)
+      if ((this.backAt != null ? this.backAt : t) - this.lostAt >= o.rearmLossMs) this.needsChange = false;
+      this.lostAt = null;
+      this.backAt = null;
+    }
     if (this.needsChange && this.target && this.shot) {
       const sc = this.shot.corners;
-      if (sc && maxCornerDist(alignCyclic(this.target, sc, a), sc, a) > o.rearmThresh) this.needsChange = false;
-      else if (info.sig && this.shot.sig) {
+      const samePlace = !sc || quadOverlap(this.target, sc) >= o.rearmOverlap;
+      if (samePlace && info.sig && this.shot.sig) {
         this.sigHits = signatureDistance(info.sig, this.shot.sig) > o.sigThresh ? this.sigHits + 1 : 0;
         if (this.sigHits >= o.sigFrames) this.needsChange = false;
-      }
+      } else this.sigHits = 0;
     }
 
     const armed = !this.needsChange && t >= this.cooldownUntil;
@@ -541,6 +580,7 @@
 
   const CONTROLLER_DEFAULTS = {
     liveMaxDim: 320,
+    minDetConf: 0.4,
     baseInterval: 110,
     maxInterval: 650,
     mainLoadFactor: 4,
@@ -836,7 +876,8 @@
     function onResult(res, t0, ms, sig, onMain, idle) {
       if (!idle) st.avgMs = st.avgMs ? st.avgMs * 0.8 + ms * 0.2 : ms;
       const t = env.now();
-      const corners = res && res.corners ? res.corners : null;
+      // weak quads (cables, desk edges, piles of paper) are not shown nor tracked
+      const corners = res && res.corners && !(res.confidence < cfg.minDetConf) ? res.corners : null;
       const s = tracker.update(corners, t, { confidence: res ? res.confidence : undefined, sig });
       if (sig) st.lastSig = sig;
       st.statusT = t;

@@ -228,14 +228,14 @@
         var nx = gx[i] / m, ny = gy[i] / m;
         var st = stepAt(samp, x, y, nx, ny, k, fa, fb);
         if (st < tStep) continue;
-        xs.push(x); ys.push(y); ws.push(Math.min(st, 90)); ts.push(Math.atan2(ny, nx));
+        xs.push(x); ys.push(y); ws.push(Math.min(st, 40)); ts.push(Math.atan2(ny, nx));
       }
     }
     return { x: xs, y: ys, w: ws, t: ts };
   }
 
   /* ---------------- Hough ---------------- */
-  function houghLines(P, E, K) {
+  function houghLines(P, E, K, minLen) {
     var W = P.W, H = P.H, cx = W / 2, cy = H / 2, D = Math.hypot(W, H);
     var NT = 180, nR = Math.ceil(D) + 3, off = nR / 2, acc = new Float32Array(NT * nR);
     var cs = new Float32Array(NT), sn = new Float32Array(NT), t, i;
@@ -253,7 +253,9 @@
     var mx = 0;
     for (i = 0; i < acc.length; i++) if (acc[i] > mx) mx = acc[i];
     if (mx <= 0) return [];
-    var thr = mx * 0.06, cand = [];
+    // absolute floor (a side of minLen px with a modest step), not relative to the strongest line:
+    // a dark wall or table edge must not drown the faint sides of white paper on a light desk
+    var thr = Math.min(mx * 0.06, (minLen || 20) * 7), cand = [];
     for (t = 0; t < NT; t++) {
       for (var r = 2; r < nR - 2; r++) {
         var v = acc[t * nR + r];
@@ -329,7 +331,7 @@
     var consistent = signs.every(function (v) { return v === signs[0] && v !== 0; });
     var area = Math.abs(polyArea(q)) / (W * H);
     var score = base * (consistent ? 1 : 0.85) * (0.82 + 0.18 * Math.min(1, area / 0.45));
-    return { score: score, sup: sup, area: area };
+    return { score: score, sup: sup, pol: pol, area: area };
   }
 
   function geomOk(q, W, H, minArea) {
@@ -476,7 +478,7 @@
   }
 
   /* A page that already fills the photo (flat scan, screenshot, close-up): the frame border is paper itself. */
-  function borderLooksLikePaper(P) {
+  function borderLooksLikePaper(P, E) {
     var W = P.W, H = P.H, b = Math.max(2, Math.round(Math.min(W, H) * 0.025)), F0 = P.F[0], F1 = P.F[1], F2 = P.F[2];
     var n = 0, paper = 0, bright = 0;
     for (var y = 0; y < H; y++) {
@@ -487,8 +489,15 @@
         if (ch < 42 && L > 120) { paper++; if (L > 175) bright++; }
       }
     }
+    // a white desk also looks like paper at the border, but it carries objects (cables, mouse, other sheets):
+    // a real page margin is nearly free of step edges
+    var e = 0, bb = b * 3;
+    for (var j = 0; j < E.x.length; j++) {
+      if (E.x[j] < bb || E.y[j] < bb || E.x[j] >= W - bb || E.y[j] >= H - bb) e++;
+    }
+    var band = 2 * bb * (W + H);
     // shadows may darken part of the frame, so ask for "mostly paper", with a clearly white share
-    return n > 0 && paper / n > 0.45 && bright / n > 0.25;
+    return n > 0 && paper / n > 0.45 && bright / n > 0.25 && e / band < 0.012;
   }
   function fullFrame() {
     return { corners: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }], confidence: 0.3, method: 'page' };
@@ -500,6 +509,18 @@
   }
 
   function detect(img, opts) {
+    opts = opts && typeof opts === 'object' ? opts : {};
+    if (opts.mode === 'live' || opts._single) return detectAt(img, opts);
+    // still: also look at a coarse copy (robust to blur and faint edges) and keep the stronger sheet
+    var fine = detectAt(img, { mode: 'still', maxDim: opts.maxDim, _single: true });
+    var coarse = detectAt(img, { mode: 'live', maxDim: 320, _single: true });
+    if (!fine) return coarse;
+    if (!coarse) return fine;
+    if (fine.method === 'page') return coarse.confidence >= 0.5 ? coarse : fine;
+    return coarse.confidence > fine.confidence + 0.1 ? coarse : fine;
+  }
+
+  function detectAt(img, opts) {
     try {
       opts = opts && typeof opts === 'object' ? opts : {};
       if (emptyInput(img) || img.width < 16 || img.height < 16) return null;
@@ -508,11 +529,11 @@
       var P = makePlanes(img, maxDim), W = P.W, H = P.H;
       if (W < 16 || H < 16) return null;
       P.F = [box3(box3(P.F[0], W, H), W, H), box3(box3(P.F[1], W, H), W, H), box3(box3(P.F[2], W, H), W, H)];
-      var minDim = Math.min(W, H), k = Math.max(2.5, minDim / 110), tStep = 9, gMin = 10;
+      var minDim = Math.min(W, H), k = Math.max(2.5, minDim / 70), tStep = 9, gMin = 10;
       var G = gradients(P), E = stepEdges(P, G, k, tStep, gMin);
       if (E.x.length < 30) return null;
       var ctx = { P: P, G: G, k: k, tStep: tStep, gMin: gMin, samp: sampler(P) };
-      var minArea = 0.05, lines = houghLines(P, E, live ? 12 : 22);
+      var minArea = 0.05, lines = houghLines(P, E, live ? 16 : 24, 0.12 * Math.min(W, H));
 
       var cands = [], i, j, a, b;
       var pairs = [], diag = Math.hypot(W, H);
@@ -549,7 +570,7 @@
       cands = cands.slice(0, live ? 12 : 30);
       for (i = 0; i < cands.length; i++) {
         var fs = scoreQuad(cands[i].q, ctx, 2);
-        cands[i].score = fs ? fs.score : 0; cands[i].area = fs ? fs.area : 0;
+        cands[i].score = fs ? fs.score : 0; cands[i].area = fs ? fs.area : 0; cands[i].fs = fs;
       }
       cands.sort(function (p, q2) { return q2.score - p.score; });
       var best = cands[0];
@@ -557,6 +578,9 @@
       for (i = 1; i < cands.length; i++) {
         var c = cands[i];
         if (c.area < best.area * 1.25 || c.score < Math.max(0.55, best.score * 0.85)) continue;
+        // the outer sheet must be a real sheet: every side backed by an edge, brighter inside, not hugging the frame
+        if (!c.fs || Math.min.apply(null, c.fs.sup) < 0.55 || !c.fs.pol.every(function (v) { return v > 0.3; })) continue;
+        if (c.q.some(function (p) { return p.x < 0.015 * W || p.y < 0.015 * H || p.x > 0.985 * W || p.y > 0.985 * H; })) continue;
         var inside = best.q.every(function (p) {
           return pointInQuad({ x: p.x, y: p.y }, c.q);
         });
@@ -568,7 +592,8 @@
         tukey: Math.max(1.2, 0.0035 * diag), maxMove: Math.max(4, 0.03 * diag),
       });
       var conf = Math.max(0, Math.min(1, (best.score - 0.2) / 0.55));
-      if (!live && conf < 0.6 && borderLooksLikePaper(P)) return fullFrame();
+      var bfs = best.fs, solidSheet = !!bfs && Math.min.apply(null, bfs.sup) >= 0.6 && bfs.pol.every(function (v) { return v > 0.3; });
+      if (!live && conf < 0.6 && !solidSheet && borderLooksLikePaper(P, E)) return fullFrame();
       var corners = orderCorners(q2).map(function (p) {
         return { x: Math.max(0, Math.min(1, p.x / W)), y: Math.max(0, Math.min(1, p.y / H)) };
       });
